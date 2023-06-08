@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  overflow-x: hidden;
+}
+
+/* Estilos Slider */
+.slick-slider .slick-dots {
+    bottom: 10px !important;
+}
+
+.slick-dots li button::before {
+    color: #77B5A9 !important;
+    font-size: 12px !important;
+}
+
+.slick-dots li.slick-active button::before {
+    color: #228370 !important;
+}
+
+
+/* Scrollbar settings */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(34, 131, 112, 1);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(119, 181, 169, 1);
+}
+
+/* Select scrollbar settings */
+div::-webkit-scrollbar-track {
+  background: gray;
+  width: 1px;
+}
+
+div::-webkit-scrollbar-thumb {
+  background-color: rgba(34, 131, 112, 1);
+  width: 2px;
+}
+
+/* Disable appearence in number input */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
