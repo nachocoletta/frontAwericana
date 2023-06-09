@@ -5,11 +5,11 @@ import Head from 'next/head'
 import Link from 'next/link'
 
 function profile () {
-  const [perfil, setPerfil] = useState({ });
+  const [perfil, setPerfil] = useState({ })
 
   const fetchPerfil = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/usuario/yo` , {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/usuario/yo`, {
         credentials: 'include'
       })
       if (response.ok) {
