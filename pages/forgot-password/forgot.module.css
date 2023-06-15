@@ -1,0 +1,45 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* width: 50%; */
+}
+
+.notification {
+    margin-top: 3rem;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.title {
+    margin-bottom: 1rem;
+}
+.parrafo {
+    text-align: justify;
+}
+
+
+@media (max-width: 980px) {
+    .notification {
+      
+        width: 70%;
+       
+    }
+  }
+@media (max-width: 780px) {
+    .notification {
+      
+        width: 80%;
+       
+    }
+  }
+@media (max-width: 480px) {
+    .notification {
+      
+        width: 90%;
+       
+    }
+  }
