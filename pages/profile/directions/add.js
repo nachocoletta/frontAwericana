@@ -81,7 +81,7 @@ export default function add () {
   return (
     <Layout>
       <Head>
-        <title>Agregar Dirección</title>
+        <title>Agregar Dirección | Awericana</title>
       </Head>
       <Header disabled={true} />
 

@@ -10,6 +10,8 @@ export async function middleware (request) {
     return NextResponse.status(200).send('ok')
   }
 
+  if (path === '/cart/payment-ponfirmed') return NextResponse.next()
+
   if (userData?.error && !isOnAuthPage) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/signin'

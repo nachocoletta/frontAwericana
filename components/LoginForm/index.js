@@ -22,10 +22,10 @@ export function LoginForm () {
   useEffect(() => {
     if (isLoading && !error) {
       login(data)
-        .then(res => {
+        .then((res) => {
           if (res) push('/')
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err)
         })
     }
@@ -40,12 +40,45 @@ export function LoginForm () {
 
   return (
     <Form onSubmit={handleSubmit}>
-        {query?.success ? <p className='text-primary text-big text-center'>Usuario registrado, inicia sesión para continuar</p> : null}
-        <Input name='email' error={error?.email} placeholder='Ingresa tu e-mail' type={'text'} label={'Ingresa tu e-mail'} onChange={handleChange} />
-        <Input name='password' error={error?.password} placeholder='Ingresa tu contraseña' type={'password'} label={'Ingresa tu contraseña'} onChange={handleChange} />
-        <Link href={'#'} className="ml-18 underline cursor-pointer text-black">¿Olvidaste Tu Contraseña?</Link>
-        <Submit center={true} isLoading={isLoading} >INICIAR SESIÓN</Submit>
-        {submitError ? <p className='text-red text-big text-center'>Credenciales inválidas, intentalo de nuevo</p> : null}
+      {query?.success
+        ? (
+        <p className="text-primary text-big text-center">
+          Usuario registrado, inicia sesión para continuar
+        </p>
+          )
+        : null}
+      <Input
+        name="email"
+        error={error?.email}
+        placeholder="Ingresa tu e-mail"
+        type={'text'}
+        label={'Ingresa tu e-mail'}
+        onChange={handleChange}
+      />
+      <Input
+        name="password"
+        error={error?.password}
+        placeholder="Ingresa tu contraseña"
+        type={'password'}
+        label={'Ingresa tu contraseña'}
+        onChange={handleChange}
+      />
+      <Link
+        href={'/forgot-password'}
+        className="ml-18 underline cursor-pointer text-black"
+      >
+        ¿Olvidaste Tu Contraseña?
+      </Link>
+      <Submit center={true} isLoading={isLoading}>
+        INICIAR SESIÓN
+      </Submit>
+      {submitError
+        ? (
+        <p className="text-red text-big text-center">
+          Credenciales inválidas, intentalo de nuevo
+        </p>
+          )
+        : null}
     </Form>
   )
 }

@@ -7,6 +7,7 @@ import { Layout } from '@/components/Layout'
 import { useError } from '@/hooks/useError'
 import { Form } from '@/components/Form'
 import { Tertiary } from '@/components/Buttons/Tertiary'
+import Head from 'next/head'
 
 export default function VenderCategory () {
   const [categorias, setCategorias] = useState([])
@@ -76,6 +77,9 @@ export default function VenderCategory () {
   return (
     <Layout>
       <Header disabled={true} />
+      <Head>
+        <title>Agregar producto | Awericana</title>
+      </Head>
       <h2 className="font-bold text-4xl mt-10 mb-10 ml-10">Vender</h2>
       <section className='flex justify-center flex-col-reverse max-w-[500px] m-auto'>
         <Form onSubmit={handleFormSubmit}>

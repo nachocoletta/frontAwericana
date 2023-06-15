@@ -36,7 +36,7 @@ function profile () {
   return (
     <Layout>
       <Head>
-        <title>Mis Datos</title>
+        <title>Mis Datos | Awericana</title>
       </Head>
       <Header disabled={true} />
       <section className='max-w-screen-sm lg:max-w-5xl m-auto h-fit flex flex-col'>

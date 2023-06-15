@@ -7,6 +7,7 @@ import { BiUpload } from 'react-icons/bi'
 import { Layout } from '@/components/Layout'
 import { useError } from '@/hooks/useError'
 import { Tertiary } from '@/components/Buttons/Tertiary'
+import Head from 'next/head'
 
 export default function UploadImage () {
   const [, setSelectedImages] = useState([])
@@ -106,6 +107,9 @@ export default function UploadImage () {
   return (
     <Layout>
       <Header disabled={true} />
+      <Head>
+        <title>Agregar producto | Awericana</title>
+      </Head>
       <h2 className="font-bold text-4xl mt-10 mb-10 md:ml-10 md:text-left text-center">Sube las fotos de tu producto</h2>
       <section className='flex flex-col justify-center items-center'>
         <form className="flex justify-center items-center flex-col">

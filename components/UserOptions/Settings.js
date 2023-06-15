@@ -2,7 +2,7 @@ import { createPortal } from 'react-dom'
 import { Label } from './Label'
 import { HiUser } from 'react-icons/hi2'
 import { BsFillHouseDoorFill } from 'react-icons/bs'
-import { AiFillHeart, AiFillCloseSquare } from 'react-icons/ai'
+import { AiFillHeart, AiFillCloseSquare, AiFillSkin, AiFillShopping } from 'react-icons/ai'
 import { ImPriceTag } from 'react-icons/im'
 import { useAuth } from '@/hooks/useAuth'
 import { useSession } from '@/hooks/useSession'
@@ -25,6 +25,12 @@ function SettingsComponent () {
         </Label>
         <Label href='/profile/directions' Icon={BsFillHouseDoorFill}>
           Direcciones
+        </Label>
+        <Label href='/sell/my-products' Icon={AiFillSkin}>
+          Mis Publicaciones
+        </Label>
+        <Label href='/cart/my-purchase' Icon={AiFillShopping}>
+          Mis Compras
         </Label>
         <Label href='/favorite' Icon={AiFillHeart}>
           Mis Favoritos

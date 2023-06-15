@@ -3,22 +3,33 @@ import { Layout } from '@/components/Layout'
 import Head from 'next/head'
 import Banner from '@/components/Banner'
 import Card from '@/components/Card'
-import Categories from '@/components/Category/Categories'
+import { Categories } from '@/components/Category/Categories'
 import Link from 'next/link'
 import { FaSearch } from 'react-icons/fa'
 import { useEffect, useState } from 'react'
 import { useDebounce } from '@/hooks/useDebounce'
 import { useSearch } from '@/hooks/useSearch'
+import { WithFilters } from '@/components/WithFilters'
+import { useSession } from '@/hooks/useSession'
 
 export default function Home ({ publicaciones = [], talles = [] }) {
   const [value, setValue] = useState('')
   const debouncedValue = useDebounce(value, 500)
   const { url, add } = useSearch()
   const [shown, setShown] = useState(publicaciones)
-  console.log(talles)
+  const { session, setSession } = useSession()
 
   useEffect(() => {
-    console.log(url)
+    if (!session?.id) {
+      const URL = `${process.env.NEXT_PUBLIC_API_URL}/auth/loginLocal/success`
+      fetch(URL, { credentials: 'include' })
+        .then(res => res.ok ? res.json() : res)
+        .then(res => setSession(res.user))
+        .catch(console.error)
+    }
+  }, [])
+
+  useEffect(() => {
     add('termino', debouncedValue)
   }, [debouncedValue])
 
@@ -26,8 +37,7 @@ export default function Home ({ publicaciones = [], talles = [] }) {
     fetch(url)
       .then(res => res.ok ? res.json() : res)
       .then(res => {
-        if (res.coincidencias > 0) setShown(res.publicaciones)
-        else setShown(publicaciones)
+        setShown(res.publicaciones)
       })
   }, [url])
 
@@ -79,24 +89,7 @@ export default function Home ({ publicaciones = [], talles = [] }) {
           </section>
         </div>
         </>
-        : shown.length > 0 && (
-          <section className='flex flex-wrap justify-center gap-4 m-auto w-full p-4'>
-            {shown.map(pub => {
-              return (
-                <Link href={'/detail/:id'} as={`/detail/${pub.id}`} key={pub.id}>
-                    <Card
-                      precio={pub.precio}
-                      titulo={pub.titulo}
-                      talleMedidas={talles.find(el => el.id === pub.talleId).nombre}
-                      imgSrc={pub.imagenPortada || null}
-                      precioOriginal={pub.precioOriginal}
-                      descuento={pub.descuento}
-                      />
-                  </Link>
-              )
-            })}
-          </section>
-        )}
+        : <WithFilters talles={talles} shown={shown} />}
     </Layout>
   )
 }
@@ -109,7 +102,7 @@ export async function getServerSideProps (ctx) {
 
   return {
     props: {
-      publicaciones: publicaciones.publicaciones,
+      publicaciones: publicaciones?.publicaciones,
       talles
     }
   }

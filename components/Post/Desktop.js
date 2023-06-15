@@ -5,50 +5,43 @@ import { Fav } from '@/components/Post/Fav'
 import { useRouter } from 'next/router'
 import { Submit } from '../Buttons/Submit'
 import { Tertiary } from '../Buttons/Tertiary'
-import { useSession } from '@/hooks/useSession'
+import { useCart } from '@/hooks/useCart'
+
 export function Desktop ({ toggleFav, buttons = false, images, ownProduct, title, isFav, price, size, detail, calificacion, nombre, apellido, originalPrice, userId, id }) {
   const [imageList, setImageList] = useState(images)
   const [shown, setShown] = useState(0)
   const router = useRouter()
-  const { session } = useSession()
-  console.log(session)
-  const addToCart = () => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${session?.id}`, {
-      credentials: 'include',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ publicacionId: id })
-    })
-      .then(response => {
-        console.log('Producto agregado al carrito:', response)
-        alert('Producto agregado')
-      })
-      .catch(error => {
-        console.error('Error al agregar el producto al carrito:', error)
-      })
-  }
+  const { isAdded, addToCart, setIsAdded } = useCart(userId, id)
 
   const handlePurchase = () => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${session?.id}`, {
-      credentials: 'include',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ publicacionId: id })
-    })
-      .then(response => {
-        router.push('/cart')
-      })
-      .catch(error => {
-        console.error('Error al agregar el producto al carrito:', error)
-      })
+    if (id) {
+      addToCart(id)
+        .then(response => {
+          router.push('/cart')
+        })
+        .catch(error => {
+          console.error('Error al agregar el producto al carrito:', error)
+        })
+    }
   }
+
+  const handleAddToCart = () => {
+    if (!isAdded && id) {
+      addToCart(id)
+        .then(res => {
+          setIsAdded(true)
+        })
+        .catch(error => {
+          console.error('Error al agregar el producto al carrito:', error)
+        })
+    } else {
+      router.push('/cart')
+    }
+  }
+
   return (
-    <div className='flex flex-row w-full items-center gap-10 mt-10  '>
-      <article className="p-layoutSides gap-10 mb-10 mt-10 pl-40 justify-center">
+    <div className='flex flex-row w-full items-center gap-10 mt-10 pl-40 pr-40  '>
+      <article className="p-layoutSides gap-10 mb-10 mt-10  justify-center">
         <figure className='h-fit max-w-[800px] aspect-video'>
           {imageList.map((src, i) => {
             if (i === shown) {
@@ -98,8 +91,10 @@ export function Desktop ({ toggleFav, buttons = false, images, ownProduct, title
                 <p className="text-xl">{`${nombre} ${apellido}`}</p>
                 <Stars rating={calificacion} />
               </div>
+              <div className='flex flex-col'>
               <Submit center={true} onClick={handlePurchase}>COMPRAR</Submit>
-              <Tertiary center={true} onClick={addToCart}>Agregar al carrito</Tertiary>
+              <Tertiary center={true} onClick={handleAddToCart}>{ !isAdded ? 'Agregar al carrito' : 'Ir al carrito'}</Tertiary>
+              </div>
             </div>
 
         </div>

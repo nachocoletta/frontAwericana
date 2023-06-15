@@ -1,39 +1,26 @@
-import { useState, useEffect } from 'react'
 import { Layout } from '@/components/Layout'
 import { Header } from '@/components/Header'
 import Link from 'next/link'
 import { useSession } from '@/hooks/useSession'
 import Head from 'next/head'
+import { useCart } from '@/hooks/useCart'
+
 export default function Index () {
-  const [carritoData, setCarritoData] = useState(null)
   const { session } = useSession()
-
-  useEffect(() => {
-    const fetchCarritoData = async () => {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${session?.id}`, { credentials: 'include' })
-        const data = await response.json()
-        setCarritoData(data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
-    fetchCarritoData()
-  }, [])
+  const { userCart } = useCart(session?.id)
 
   return (
 <Layout>
       <Head>
-        <title>Mi Carrito</title>
+        <title>Mi Carrito | Awericana</title>
       </Head>
     <Header/>
     <div className='px-[10%]'>
       <h3 className='mt-20 mb-5 text-3xl'>Producto</h3>
       <section >
-      {carritoData?.carrito && (
+      {userCart?.carrito && (
         <div className=''>
-          {carritoData.carrito.map((item) => (
+          {userCart.carrito.map((item) => (
             <div className='flex mt-5 py-4 px-11 shadow-down w-full justify-between items-center h-[160px]' key={item.publicacion.id}>
             <div className='flex items-center '>
             <img className='w-[112px] h-[112px]' src={item.publicacion.imagenPortada}/>
@@ -78,7 +65,7 @@ export default function Index () {
 
       <div className=' flex items-center justify-between px-[3%] py-[5%] text-3xl '>
        <p>Total Pagar</p>
-       <p>${carritoData?.montoTotal}</p>
+       <p>${userCart?.montoTotal}</p>
        </div>
        <div className='flex items-center flex-col gap-4 ' >
     <Link href={'/cart/confirm-purchase'}><button className='w-full md:w-[28rem] hover:scale-110 min-w-[200px] relative lg:w-[28rem] lg:h-14 py-3 cursor-pointer bg-secondary select-none shadow-lg rounded-xl text-white font-md text-lg transition'>Continuar</button></Link>

@@ -9,6 +9,7 @@ import { Post } from '@/components/Post'
 import { useProduct } from '@/hooks/useProduct'
 import { useError } from '@/hooks/useError'
 import { useMyPublications } from '@/hooks/useMyPublications'
+import Head from 'next/head'
 
 export default function Preview () {
   const [formData, setFormData] = useState(null)
@@ -62,7 +63,9 @@ export default function Preview () {
     <Layout>
       <Header disabled={true} />
       <h2 className='mt-14 ml-8 text-4xl'>Vista Previa</h2>
-
+      <Head>
+        <title>Agregar producto | Awericana</title>
+      </Head>
       {formData
         ? (
         <section className='flex flex-col m-auto max-w-[500px] lg:w-full lg:max-w-none justify-center items-center gap-10 mt-14'>

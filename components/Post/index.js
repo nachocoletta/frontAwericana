@@ -5,46 +5,38 @@ import { Submit } from '../Buttons/Submit'
 import { Tertiary } from '../Buttons/Tertiary'
 import { useFav } from '@/hooks/useFav'
 import { useRouter } from 'next/router'
+import { useCart } from '@/hooks/useCart'
 
 export function Post ({ userId, id, initialFav, buttons, title, price, imageUrls, detail, selectedTalle, sellerData, originalPrice, ownProduct }) {
   const [isBig, setIsBig] = useState(false)
   const { isFav, toggle } = useFav(initialFav, userId, id)
   const router = useRouter()
-
-  const addToCart = () => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${userId}`, {
-      credentials: 'include',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ publicacionId: id })
-    })
-      .then(response => {
-        console.log('Producto agregado al carrito:', response)
-        alert('Producto agregado')
-      })
-      .catch(error => {
-        console.error('Error al agregar el producto al carrito:', error)
-      })
-  }
+  const { isAdded, addToCart, setIsAdded } = useCart(userId, id)
 
   const handlePurchase = () => {
-    console.log(userId)
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${userId}`, {
-      credentials: 'include',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ publicacionId: id })
-    })
-      .then(response => {
-        router.push('/cart')
-      })
-      .catch(error => {
-        console.error('Error al agregar el producto al carrito:', error)
-      })
+    if (id) {
+      addToCart(id)
+        .then(response => {
+          router.push('/cart')
+        })
+        .catch(error => {
+          console.error('Error al agregar el producto al carrito:', error)
+        })
+    }
+  }
+
+  const handleAddToCart = () => {
+    if (!isAdded && id) {
+      addToCart(id)
+        .then(res => {
+          setIsAdded(true)
+        })
+        .catch(error => {
+          console.error('Error al agregar el producto al carrito:', error)
+        })
+    } else {
+      router.push('/cart')
+    }
   }
 
   useEffect(() => {
@@ -67,7 +59,7 @@ export function Post ({ userId, id, initialFav, buttons, title, price, imageUrls
       <Mobile toggleFav={() => toggle()} isFav={isFav} ownProduct={ownProduct} {...{ title, price, size: selectedTalle, detail, images: imageUrls, calificacion: sellerData?.calificacion, nombre: sellerData?.nombre, apellido: sellerData?.apellido, originalPrice, userId, id }} />
       {!ownProduct && buttons && <div className='flex flex-col w-full items-center justify-center absolute '>
         <Submit center={true} onClick={handlePurchase}>COMPRAR</Submit>
-        <Tertiary center={true} onClick={addToCart}>Agregar al carrito</Tertiary>
+        <Tertiary center={true} onClick={handleAddToCart}>Agregar al carrito</Tertiary>
       </div>}
     </section>
   )

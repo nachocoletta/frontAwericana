@@ -1,67 +1,34 @@
-import React, { useState, useEffect } from 'react'
 import { Layout } from '@/components/Layout'
 import { Header } from '@/components/Header'
-import { useSession } from '@/hooks/useSession'
 import { BiTrash } from 'react-icons/bi'
 import Link from 'next/link'
 import Head from 'next/head'
+import { useCart } from '@/hooks/useCart'
+import { useSession } from '@/hooks/useSession'
 
 export default function Index () {
-  const [carritoData, setCarritoData] = useState(null)
   const { session } = useSession()
-
-  useEffect(() => {
-    const fetchCarritoData = async () => {
-      try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${session?.id}`, {
-          credentials: 'include'
-        })
-        const data = await response.json()
-        setCarritoData(data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
-    fetchCarritoData()
-  }, [])
+  const { deleteCartItem, userCart } = useCart(session?.id)
 
   const handleDeleteItem = async (itemId) => {
-    try {
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/carrito/${session?.id}`, {
-        method: 'DELETE',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ publicacionId: itemId })
-      })
-
-      const itemIndex = carritoData.carrito.findIndex((item) => item.publicacion.id === itemId)
-      if (itemIndex !== -1) {
-        const updatedCarritoData = [...carritoData.carrito]
-        updatedCarritoData.splice(itemIndex, 1)
-        setCarritoData({ ...carritoData, carrito: updatedCarritoData })
-      }
-    } catch (error) {
-      console.error(error)
-    }
+    deleteCartItem(itemId)
+      .catch(console.error)
   }
 
   return (
     <Layout>
       <Head>
-        <title>Mi Carrito</title>
+        <title>Mi Carrito | Awericana</title>
       </Head>
       <Header />
 
       <div className="px-[10%]">
         <h3 className="mt-20 mb-5 text-3xl">Producto</h3>
         <section>
-          {carritoData?.carrito && carritoData.carrito.length > 0
+          {userCart?.carrito && userCart.carrito.length > 0
             ? (
             <div className="">
-              {carritoData.carrito.map((item) => (
+              {userCart.carrito.map((item) => (
                 <div
                   className="flex mt-5 py-4 px-11 shadow-down w-full justify-between items-center h-[160px]"
                   key={item.publicacion.id}
@@ -91,7 +58,7 @@ export default function Index () {
         </section>
 
         <div className="flex items-center flex-col gap-4 mt-7 ">
-          {carritoData?.carrito && carritoData.carrito.length > 0
+          {userCart?.carrito && userCart.carrito.length > 0
             ? (
             <Link href="/cart/delivery">
               <button className="w-full  md:w-[28rem] hover:scale-110 min-w-[200px] relative lg:w-[28rem] lg:h-14 py-3 cursor-pointer bg-secondary select-none shadow-lg rounded-xl text-white font-md text-lg transition">
@@ -101,7 +68,7 @@ export default function Index () {
               )
             : (
             <button
-              className="w-full md:w-[28rem]  min-w-[200px] relative lg:w-[28rem] lg:h-14 py-3 cursor-pointer bg-secondary select-none shadow-lg rounded-xl text-white font-md text-lg transition"
+              className="w-full md:w-[28rem]  min-w-[200px] relative lg:w-[28rem] lg:h-14 py-3 cursor-no-drop bg-secondary select-none shadow-lg rounded-xl text-white font-md text-lg transition"
               disabled
             >
               Comprar Carrito

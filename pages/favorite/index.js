@@ -43,7 +43,7 @@ export default function index () {
   return (
     <Layout>
         <Head>
-        <title>Mis Favoritos</title>
+        <title>Mis Favoritos | Awericana</title>
       </Head>
       <Header />
       <h3 className='mt-16 ml-10 mb-8 text-4xl '>Mis Favoritos</h3>

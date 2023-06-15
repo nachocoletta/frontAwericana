@@ -7,7 +7,7 @@ function Signup () {
   return (
     <Layout>
       <Head>
-        <title>Registrate</title>
+        <title>Registrate | Awericana</title>
       </Head>
       <header className='m-small'>
           <nav className='block m-auto w-fit'>

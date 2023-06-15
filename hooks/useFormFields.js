@@ -1,12 +1,12 @@
-import { useState } from 'react'
+import { useState } from "react";
 
-export function useFormFields (initialState = {}) {
-  const [data, setData] = useState(initialState)
+export function useFormFields(initialState = {}) {
+  const [data, setData] = useState(initialState);
 
-  function handleChange (e) {
-    const { name, value } = e.target
-    setData({ ...data, [name]: value.trim() })
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setData({ ...data, [name]: value.trim() });
   }
 
-  return { data, handleChange }
+  return { data, handleChange };
 }

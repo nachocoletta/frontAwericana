@@ -7,7 +7,7 @@ export default function paymentPonfirmed () {
   return (
     <Layout>
       <Head>
-        <title>Mi Carrito</title>
+        <title>Mi Carrito | Awericana</title>
       </Head>
         <Header/>
     <h3 className='mt-14 mr-11 text-3xl ml-14'>Pago Rechazado </h3>

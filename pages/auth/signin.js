@@ -9,7 +9,7 @@ export default function Signin () {
   return (
     <Layout>
        <Head>
-        <title>Inicia Sesion</title>
+        <title>Inicia Sesion | Awericana</title>
       </Head>
       <header className='m-small'>
           <nav className='block m-auto w-fit'>

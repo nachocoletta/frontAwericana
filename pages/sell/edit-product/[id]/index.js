@@ -73,8 +73,8 @@ export default function Editar () {
   if (!previous) {
     return (
     <Layout>
-       <Head>
-        <title>Agregar producto | Awericana</title>
+      <Head>
+        <title>Editar producto | Awericana</title>
       </Head>
       <Header disabled={true}/>
       <Loading />
@@ -85,7 +85,7 @@ export default function Editar () {
   return (
     <Layout>
       <Head>
-        <title>Agregar producto | Awericana</title>
+        <title>Editar producto | Awericana</title>
       </Head>
       <Header disabled={true} />
       <h2 className='font-bold text-4xl mt-10 mb-10 ml-10'>Vender</h2>

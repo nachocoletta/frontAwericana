@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { data } from 'autoprefixer'
 import { Loading } from '@/components/Loading'
 
-const Categories = () => {
+export function Categories ({ setCategory }) {
   const [isLoading, setIsLoading] = useState(false)
   const [categories, setCategories] = useState([])
   const URL = `${process.env.NEXT_PUBLIC_API_URL}/categoria`
@@ -58,10 +58,8 @@ const Categories = () => {
   return (
     <Slider {...settings}>
       {categories.map(category => (
-        <Category key={category.id} name={category.nombre} img={category.link}/>
+        <Category onClick={() => setCategory(category.nombre)} key={category.id} name={category.nombre} img={category.link}/>
       ))}
     </Slider>
   )
 }
-
-export default Categories

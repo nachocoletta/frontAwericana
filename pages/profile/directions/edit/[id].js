@@ -107,7 +107,7 @@ export default function add () {
   return (
     <Layout>
       <Head>
-        <title>Modificar Dirección</title>
+        <title>Modificar Dirección | Awericana</title>
       </Head>
       <Header disabled={true} />
       <section className='flex flex-col justify-center items-center'>

@@ -30,7 +30,7 @@ export default function Direccion () {
   return (
     <Layout>
       <Head>
-        <title>Mis Direcciones</title>
+        <title>Mis Direcciones | Awericana</title>
       </Head>
       <Header />
       <section className='max-w-screen-sm lg:max-w-5xl m-auto h-fit flex flex-col'>
